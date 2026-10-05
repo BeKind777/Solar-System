@@ -1,3 +1,8 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Solar System Orrery</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,17 +39,17 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
 input[type=number]{width:100%;font-family:var(--f-mono);min-width:0}
 input[type=range]{width:100%;accent-color:var(--amber)}
 .layout{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;margin-top:12px}
-@media(min-width:960px){.layout{grid-template-columns:minmax(0,1fr) clamp(480px,42vw,720px);align-items:start}}
+@media(min-width:960px){.layout{grid-template-columns:minmax(0,1fr) clamp(340px,31vw,470px);align-items:start}}
 .stage{position:relative;border:1px solid var(--line);border-radius:6px;background:#050912;overflow:hidden;min-width:0}
 canvas{display:block;width:100%;height:64vh;min-height:360px;touch-action:none;cursor:grab}
-@media(min-width:960px){canvas{height:calc(100vh - 230px);min-height:520px}}
+@media(min-width:960px){canvas{height:calc(100vh - 285px);min-height:480px}}
 .hud{position:absolute;left:10px;top:10px;max-width:calc(100% - 118px);padding:6px 9px;background:rgba(5,9,18,.66);border:1px solid var(--line2);border-radius:5px;font-size:12px;line-height:1.5;pointer-events:none}
 .hud .am,.am{color:var(--amber)}
 .hud .tl{color:var(--teal);font-size:11px}
 .stagebtns{position:absolute;right:10px;top:10px;display:flex;flex-direction:column;gap:6px}
 .stagebtns button{padding:5px 9px;font-size:12px;background:rgba(22,36,74,.85)}
-.chips{display:flex;gap:6px;overflow-x:auto;padding:8px;border-top:1px solid var(--line)}
-.chips button{flex:0 0 auto;padding:5px 11px;font-size:12px}
+.chips{display:flex;flex-wrap:wrap;gap:5px;padding:7px 8px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--panel);z-index:2}
+.chips button{flex:0 0 auto;padding:4px 8px;font-size:12px}
 .scbox{border:1px solid var(--line2);border-radius:6px;margin:0 0 10px;padding:0}
 .scbox>summary,.scgrp>summary,.scadd>summary{cursor:pointer;padding:7px 10px;font-size:13px;color:var(--teal);list-style:none}
 .scbox>summary::-webkit-details-marker,.scgrp>summary::-webkit-details-marker,.scadd>summary::-webkit-details-marker{display:none}
@@ -60,7 +65,7 @@ input[type=text]{width:100%;min-width:0}
 .st-ok{color:var(--green)}.st-hard{color:var(--amber)}.st-no{color:var(--mute)}.st-warn{color:var(--rose)}
 .panel{background:var(--panel);border:1px solid var(--line);border-radius:6px;min-width:0}
 @media(min-width:960px){.panel{max-height:calc(100vh - 230px);overflow:auto}}
-.tabs{display:flex;border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top,0px);background:var(--panel);z-index:2}
+.tabs{display:flex;border-top:1px solid var(--line);background:var(--panel);z-index:2}
 .tabs{overflow-x:auto}
 .tabs button{flex:1 0 auto;white-space:nowrap;border:0;border-radius:0;background:transparent;padding:10px 12px;color:var(--mute);border-bottom:2px solid transparent}
 .tabs button.on{color:var(--amber);border-bottom-color:var(--amber)}
@@ -107,9 +112,43 @@ pre.formula{margin:6px 0 0;padding:10px;background:#070c18;border:1px solid var(
 #skychart{display:block;width:100%;height:330px;margin:4px 0 8px;background:#050912;border:1px solid var(--line2);border-radius:6px}
 .why li{margin:7px 0}
 .sw{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+
+/* Touch / phone ergonomics */
+canvas{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
+@media(max-width:959px){
+  body{padding-inline:10px}
+  canvas{height:56vh;height:56dvh;min-height:320px}
+  .hud{max-width:calc(100% - 20px);font-size:11px;padding:5px 8px}
+  .stagebtns{flex-direction:row;top:auto;bottom:88px;right:8px}
+  .stagebtns button{padding:6px 9px;font-size:12px;min-height:34px}
+  .tabs button{padding:12px 14px}
+  .chips{position:static}
+  .grid2{grid-template-columns:minmax(0,1fr)}
+  .sub,#simJD,.hud .tl{display:none}
+  h1{font-size:20px}
+  header.top{align-items:center;padding-block:0 6px}
+  .clock{display:flex;flex-wrap:wrap;gap:0 10px;align-items:center;justify-content:flex-start;text-align:left}
+  .langsw{margin:0 0 2px auto}
+  #simDate{font-size:13px}#simLocal{font-size:12px;margin:0}
+  .timebar{padding:6px 8px;gap:6px 8px}
+  .timebar button{padding:4px 12px;flex:1 1 auto}
+  .timebar label{flex:1 1 44%}
+  .timebar select,.timebar input{flex:1;min-width:0;min-height:34px}
+}
+@media(pointer:coarse){
+  button,select,input[type=date]{min-height:38px}
+  input[type=number],input[type=text],select,input[type=date]{font-size:16px}
+  .chips button{padding:9px 14px;font-size:13px}
+  input[type=range]{height:30px}
+  input[type=checkbox],input[type=radio]{width:20px;height:20px}
+  .checks{gap:10px}
+  .scrow{padding:10px 14px}
+}
 .langsw{display:flex;gap:4px;justify-content:flex-end;margin-bottom:6px}
 .langsw button{padding:2px 10px;font-size:12px}
 </style>
+</head>
+<body>
 
 <div id="app"></div>
 <script>
@@ -130,12 +169,12 @@ window.TEXDATA={"mercury": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2
     <button type="button" id="btnRev">倒放</button>
     <label>速度
       <select id="selRate">
-        <option value="0.0000115741">实时（1 秒/秒）</option>
+        <option value="0.0000115741" selected>实时（1 秒/秒）</option>
         <option value="0.000694444">1 分钟/秒</option>
         <option value="0.0416667">1 小时/秒</option>
         <option value="0.25">6 小时/秒</option>
         <option value="1">1 天/秒</option>
-        <option value="2" selected>2 天/秒</option>
+        <option value="2">2 天/秒</option>
         <option value="7">1 周/秒</option>
         <option value="30">1 月/秒</option>
         <option value="365.25">1 年/秒</option>
@@ -156,10 +195,6 @@ window.TEXDATA={"mercury": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2
         <button type="button" data-view="side">侧视</button>
         <button type="button" id="btnSun">回太阳</button>
       </div>
-      <div class="chips" id="chips"></div>
-    </section>
-
-    <aside class="panel">
       <nav class="tabs" role="tablist">
         <button type="button" class="on" data-tab="view">视图</button>
         <button type="button" data-tab="body">天体</button>
@@ -169,6 +204,10 @@ window.TEXDATA={"mercury": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2
         <button type="button" data-tab="pair">两点转移</button>
         <button type="button" data-tab="about">说明</button>
       </nav>
+    </section>
+
+    <aside class="panel">
+      <div class="chips" id="chips"></div>
 
       <div class="pane on" id="tab-view">
         <fieldset>
@@ -201,12 +240,6 @@ window.TEXDATA={"mercury": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2
           <p class="note">压缩比例只改变距离显示，行星的方向与角度保持真实。</p>
         </fieldset>
 
-        <fieldset>
-          <legend>卫星轨道放大</legend>
-          <div class="row sp"><label for="moonScale">卫星距离与行星半径同比放大</label><span class="mono" id="moonScaleV">×60</span></div>
-          <input type="range" id="moonScale" min="0" max="330" step="1" value="178">
-          <p class="note">真实比例下卫星轨道太小，放大后行星与卫星的大小比例仍保持真实。</p>
-        </fieldset>
 
         <fieldset>
           <legend>显示</legend>
@@ -241,7 +274,7 @@ window.TEXDATA={"mercury": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2
             <option value="jupiter">木星</option><option value="saturn">土星</option><option value="uranus">天王星</option><option value="neptune">海王星</option>
           </select></div>
         <div id="locSlotSky"><div id="locBlock">
-        <details class="scbox" id="cityBox"><summary id="citySum">位置：芝加哥，伊利诺伊（点开选择美国城市）</summary>
+        <details class="scbox" id="cityBox"><summary id="citySum">位置：芝加哥，伊利诺伊（点开选择城市）</summary>
           <div id="cityList"></div>
         </details>
         <div class="grid2">
@@ -249,7 +282,7 @@ window.TEXDATA={"mercury": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2
           <div class="pt"><label for="skyLon">经度 °（西经填负数）</label><input type="number" id="skyLon" value="-87.63" step="0.1"></div>
           <div class="pt"><label for="skyTz">时区（UTC 偏移，小时）</label><input type="number" id="skyTz" value="-4" step="0.5"></div>
         </div>
-        <label class="note" style="display:block"><input type="checkbox" id="skyAuto" checked> 按美国夏令时自动调整时区（手改时区后自动关闭）</label>
+        <label class="note" style="display:block"><input type="checkbox" id="skyAuto" checked> 按当地夏令时自动调整时区（手改时区后自动关闭）</label>
         </div></div>
         <p class="note">默认位置是伊利诺伊州芝加哥。选城市会自动填好经纬度和时区，也可以直接改数字。日期跟随页面顶部的日期，「观测」页共用同一个位置。</p>
         <canvas id="skycv" aria-label="天空方位图"></canvas>
@@ -345,7 +378,8 @@ window.TEXDATA={"mercury": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2
           <div class="pt"><label for="inPay">有效载荷 kg</label><input type="number" id="inPay" value="1000" min="1" step="100"></div>
         </div>
         <p class="note">比冲越高越省推进剂；结构系数越小，单级能达到的 Δv 越大。选一款火箭后，计算结果最后会多一张「这枚火箭够不够用」的卡片。</p>
-        <div class="btnrow"><button type="button" id="btnCalc" class="primary">计算</button><button type="button" id="btnSwap">起终点互换</button></div>
+        <div class="btnrow"><button type="button" id="btnCalc" class="primary">按当前日期重新计算</button><button type="button" id="btnSwap">起终点互换</button></div>
+        <p class="note">修改任何输入后结果会自动更新。模拟时钟仍在走，想按页面顶部当前显示的日期重新算，就点“重新计算”。</p>
         <div id="pairOut"></div>
       </div>
 
@@ -399,12 +433,12 @@ window.TEXDATA={"mercury": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2
     <button type="button" id="btnRev">Reverse</button>
     <label>Speed
       <select id="selRate">
-        <option value="0.0000115741">Real time (1 s/s)</option>
+        <option value="0.0000115741" selected>Real time (1 s/s)</option>
         <option value="0.000694444">1 min/s</option>
         <option value="0.0416667">1 h/s</option>
         <option value="0.25">6 h/s</option>
         <option value="1">1 day/s</option>
-        <option value="2" selected>2 days/s</option>
+        <option value="2">2 days/s</option>
         <option value="7">1 week/s</option>
         <option value="30">1 month/s</option>
         <option value="365.25">1 year/s</option>
@@ -425,10 +459,6 @@ window.TEXDATA={"mercury": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2
         <button type="button" data-view="side">Side</button>
         <button type="button" id="btnSun">Sun-centered</button>
       </div>
-      <div class="chips" id="chips"></div>
-    </section>
-
-    <aside class="panel">
       <nav class="tabs" role="tablist">
         <button type="button" class="on" data-tab="view">View</button>
         <button type="button" data-tab="body">Body</button>
@@ -438,6 +468,10 @@ window.TEXDATA={"mercury": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2
         <button type="button" data-tab="pair">Transfer</button>
         <button type="button" data-tab="about">About</button>
       </nav>
+    </section>
+
+    <aside class="panel">
+      <div class="chips" id="chips"></div>
 
       <div class="pane on" id="tab-view">
         <fieldset>
@@ -470,12 +504,6 @@ window.TEXDATA={"mercury": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2
           <p class="note">Compression only changes how distances are drawn; planet directions and angles stay true.</p>
         </fieldset>
 
-        <fieldset>
-          <legend>Moon orbit exaggeration</legend>
-          <div class="row sp"><label for="moonScale">Moon distances scale up with planet radius</label><span class="mono" id="moonScaleV">×60</span></div>
-          <input type="range" id="moonScale" min="0" max="330" step="1" value="178">
-          <p class="note">Moon orbits are tiny at true scale; after exaggeration, planet and moon sizes keep their true ratio.</p>
-        </fieldset>
 
         <fieldset>
           <legend>Display</legend>
@@ -510,7 +538,7 @@ window.TEXDATA={"mercury": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2
             <option value="jupiter">Jupiter</option><option value="saturn">Saturn</option><option value="uranus">Uranus</option><option value="neptune">Neptune</option>
           </select></div>
         <div id="locSlotSky"><div id="locBlock">
-        <details class="scbox" id="cityBox"><summary id="citySum">Location: Chicago, Illinois (tap to pick a US city)</summary>
+        <details class="scbox" id="cityBox"><summary id="citySum">Location: Chicago, Illinois (tap to pick a city)</summary>
           <div id="cityList"></div>
         </details>
         <div class="grid2">
@@ -518,7 +546,7 @@ window.TEXDATA={"mercury": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2
           <div class="pt"><label for="skyLon">Longitude (°, west negative)</label><input type="number" id="skyLon" value="-87.63" step="0.1"></div>
           <div class="pt"><label for="skyTz">Time zone (UTC offset, hours)</label><input type="number" id="skyTz" value="-4" step="0.5"></div>
         </div>
-        <label class="note" style="display:block"><input type="checkbox" id="skyAuto" checked> Adjust time zone automatically for US daylight saving time (turns off when you edit the time zone)</label>
+        <label class="note" style="display:block"><input type="checkbox" id="skyAuto" checked> Adjust time zone automatically for local daylight saving time (turns off when you edit the time zone)</label>
         </div></div>
         <p class="note">The default location is Chicago, Illinois. Picking a city fills in latitude, longitude and time zone; you can also edit the numbers directly. The date follows the date at the top of the page, and the Scope tab shares this location.</p>
         <canvas id="skycv" aria-label="Sky azimuth chart"></canvas>
@@ -614,7 +642,8 @@ window.TEXDATA={"mercury": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2
           <div class="pt"><label for="inPay">Payload (kg)</label><input type="number" id="inPay" value="1000" min="1" step="100"></div>
         </div>
         <p class="note">Higher Isp saves propellant; a smaller structural fraction gives a single stage more Δv. If you pick a rocket, the result ends with an extra "Is this rocket enough?" card.</p>
-        <div class="btnrow"><button type="button" id="btnCalc" class="primary">Calculate</button><button type="button" id="btnSwap">Swap</button></div>
+        <div class="btnrow"><button type="button" id="btnCalc" class="primary">Recalculate for current date</button><button type="button" id="btnSwap">Swap</button></div>
+        <p class="note">Results update automatically when you change an input. The simulation clock keeps running, so press Recalculate to recompute for the date now shown at the top.</p>
         <div id="pairOut"></div>
       </div>
 
@@ -1182,8 +1211,8 @@ const nameOf = id => id === 'sun' ? '太阳' : id === 'halley' ? '哈雷彗星' 
 
 /* ---------------- 状态 ---------------- */
 const S = {
-  jd: P.dateToJd(new Date()), playing: true, rate: 2, rev: false,
-  yaw: 0, pitch: 55 * D2R, zoom: 100, focus: 'sun', sel: 'earth', range: 3.6, mode: 'true', moonScale: 60,
+  jd: P.dateToJd(new Date()), playing: true, rate: 0.0000115741, rev: false,
+  yaw: 0, pitch: 55 * D2R, zoom: 100, focus: 'sun', sel: 'earth', range: 3.6, mode: 'true', moonScale: 1,
   show: { scope: false, dwarfs: true, orbits: true, labels: true, ring: true, axis: true, drop: false, moons: true, moonOrbits: true, belt: true, trojan: true, kuiper: true, halley: true },
   plan: null, pairOn: false, pair: null, lagOn: false, lagAB: null
 };
@@ -1194,7 +1223,7 @@ const stars = []; (function () { let s = 7; const r = () => (s = (s * 16807) % 2
 
 function resize() {
   const r = cv.getBoundingClientRect();
-  DPR = Math.min(2, window.devicePixelRatio || 1);
+  DPR = Math.min(1.5, window.devicePixelRatio || 1);
   W = Math.max(100, r.width); H = Math.max(100, r.height);
   cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
   if (first && r.width > 150) { first = false; focusOn('sun'); }
@@ -1255,9 +1284,45 @@ function buildFrame() {
 function bodyDisp(b) { return FR.pos[b.id] || dispVec(b.helio(S.jd)); }
 
 /* ---------------- 绘制工具 ---------------- */
+/* viewport clipping: keeps coordinates bounded so dashed/huge shapes stay cheap when zoomed in */
+function clipSeg(x0, y0, x1, y1) {
+  const m = 40, xmin = -m, xmax = W + m, ymin = -m, ymax = H + m;
+  let t0 = 0, t1 = 1; const dx = x1 - x0, dy = y1 - y0;
+  const p = [-dx, dx, -dy, dy], q = [x0 - xmin, xmax - x0, y0 - ymin, ymax - y0];
+  for (let i = 0; i < 4; i++) {
+    if (p[i] === 0) { if (q[i] < 0) return null; }
+    else { const r = q[i] / p[i]; if (p[i] < 0) { if (r > t1) return null; if (r > t0) t0 = r; } else { if (r < t0) return null; if (r < t1) t1 = r; } }
+  }
+  return [x0 + t0 * dx, y0 + t0 * dy, x0 + t1 * dx, y0 + t1 * dy];
+}
+function pathClipped(qs) {
+  let px = NaN, py = NaN;
+  for (let i = 1; i < qs.length; i++) {
+    const c = clipSeg(qs[i - 1][0], qs[i - 1][1], qs[i][0], qs[i][1]);
+    if (!c) continue;
+    if (c[0] !== px || c[1] !== py) ctx.moveTo(c[0], c[1]);
+    ctx.lineTo(c[2], c[3]); px = c[2]; py = c[3];
+  }
+}
+function clipPoly(qs) {   // Sutherland-Hodgman against the viewport
+  const m = 40;
+  const edges = [[0, -m, 1], [0, W + m, -1], [1, -m, 1], [1, H + m, -1]];
+  let out = qs;
+  for (const [ax, v, sg] of edges) {
+    const inp = out; out = [];
+    for (let i = 0; i < inp.length; i++) {
+      const a = inp[i], b = inp[(i + 1) % inp.length];
+      const ia = (a[ax] - v) * sg >= 0, ib = (b[ax] - v) * sg >= 0;
+      if (ia) out.push(a);
+      if (ia !== ib) { const t = (v - a[ax]) / (b[ax] - a[ax]); out.push([a[0] + t * (b[0] - a[0]), a[1] + t * (b[1] - a[1])]); }
+    }
+    if (!out.length) break;
+  }
+  return out;
+}
 function strokePoly(pts, color, width, dash) {
   ctx.beginPath();
-  for (let i = 0; i < pts.length; i++) { const q = proj(pts[i]); if (i) ctx.lineTo(q[0], q[1]); else ctx.moveTo(q[0], q[1]); }
+  pathClipped(pts.map(proj));
   ctx.strokeStyle = color; ctx.lineWidth = width; ctx.setLineDash(dash || []); ctx.stroke(); ctx.setLineDash([]);
 }
 function text(s, x, y, color, size, align) {
@@ -1300,47 +1365,113 @@ function drawProtractor() {
 }
 
 /* ---------------- 绘制：轨道 ---------------- */
+/* ---------------- Orbit / particle caches (performance) ---------------- */
+const OC = { key: '', planets: {}, dwarfs: {}, halley: null, moons: {} };
+function orbitCache() {
+  if (OC.mode !== S.mode) { OC.mode = S.mode; OC.planets = {}; OC.dwarfs = {}; OC.halley = null; OC.moons = {}; }
+  return OC;
+}
+// sample count grows with on-screen size so the polyline stays a smooth curve at any zoom; time bucket shrinks so elements never visibly drift
+const pow2 = x => Math.pow(2, Math.ceil(Math.log2(Math.max(x, 1))));
+const orbN = (aDisp, lo) => Math.min(4096, Math.max(lo, pow2(TAU * aDisp * S.zoom / 5)));
+const orbStep = days => Math.max(1, Math.min(730, 1e6 / S.zoom)) * (days || 1);
+function flatten(pts) { return pts.map(q => [q[0], q[1], 0]); }
+function strokeOff(pts, off, color, width, dash) {
+  ctx.beginPath();
+  pathClipped(pts.map(v => proj([v[0] + off[0], v[1] + off[1], v[2] + off[2]])));
+  ctx.strokeStyle = color; ctx.lineWidth = width; ctx.setLineDash(dash || []); ctx.stroke(); ctx.setLineDash([]);
+}
 function drawOrbits() {
-  const T = (S.jd - J2000) / 36525;
+  const T = (S.jd - J2000) / 36525, oc = orbitCache();
+  const planetOrb = p => {
+    const k = P.elemsAt(p, T), n = orbN(dispR(k.a), 200), b = Math.round(S.jd / orbStep());
+    let c = oc.planets[p.id];
+    if (!c || c.n !== n || c.b !== b) {
+      const raw = P.orbitPoints(k.a, k.e, k.i, k.Om, k.w, n);
+      c = oc.planets[p.id] = { n, b, pts: raw.map(dispVec), flat: S.show.drop ? flatten(raw).map(dispVec) : null };
+    }
+    if (S.show.drop && !c.flat) c.flat = flatten(P.orbitPoints(k.a, k.e, k.i, k.Om, k.w, n)).map(dispVec);
+    return c;
+  };
+  const dwarfOrb = d => {
+    const n = orbN(dispR(d.a), 240);
+    let c = oc.dwarfs[d.id];
+    if (!c || c.n !== n) {
+      const raw = P.orbitPoints(d.a, d.e, d.i * D2R, d.Om * D2R, d.w * D2R, n);
+      c = oc.dwarfs[d.id] = { n, pts: raw.map(dispVec), flat: flatten(raw).map(dispVec) };
+    }
+    return c;
+  };
   if (S.show.orbits) {
     for (const p of PLANETS) {
-      const k = P.elemsAt(p, T);
-      const pts = P.orbitPoints(k.a, k.e, k.i, k.Om, k.w, 200).map(dispVec);
       const on = S.sel === p.id;
-      strokePoly(pts, on ? 'rgba(255,179,71,.9)' : p.col + '66', on ? 1.6 : 1);
+      strokePoly(planetOrb(p).pts, on ? 'rgba(255,179,71,.9)' : p.col + '66', on ? 1.6 : 1);
     }
     if (S.show.dwarfs) for (const d of DWARFS) {
       const on = S.sel === d.id;
-      strokePoly(P.orbitPoints(d.a, d.e, d.i * D2R, d.Om * D2R, d.w * D2R, 240).map(dispVec), on ? 'rgba(255,179,71,.9)' : d.col + '66', on ? 1.6 : 1, [2, 4]);
+      strokePoly(dwarfOrb(d).pts, on ? 'rgba(255,179,71,.9)' : d.col + '66', on ? 1.6 : 1, [2, 4]);
     }
     if (S.show.halley) {
-      const H0 = P.HALLEY;
-      strokePoly(P.orbitPoints(H0.a, H0.e, H0.i, H0.Om, H0.w, 260).map(dispVec), S.sel === 'halley' ? 'rgba(255,179,71,.9)' : 'rgba(255,214,140,.38)', 1, [5, 4]);
+      const hn = orbN(dispR(P.HALLEY.a), 260);
+      if (!oc.halley || oc.halley.n !== hn) { const H0 = P.HALLEY; oc.halley = { n: hn, pts: P.orbitPoints(H0.a, H0.e, H0.i, H0.Om, H0.w, hn).map(dispVec) }; }
+      strokePoly(oc.halley.pts, S.sel === 'halley' ? 'rgba(255,179,71,.9)' : 'rgba(255,214,140,.38)', 1, [5, 4]);
     }
+  }
+  if (S.show.drop) {   // orbit shadows on the ecliptic plane
+    for (const p of PLANETS) strokePoly(planetOrb(p).flat, 'rgba(89,210,230,.38)', 1, [6, 4]);
+    if (S.show.dwarfs) for (const d of DWARFS) strokePoly(dwarfOrb(d).flat, 'rgba(89,210,230,.22)', 1, [3, 5]);
   }
   if (S.show.moons && S.show.moonOrbits) {
     for (const p of PLANETS) {
       for (const m of p.moons) {
         const rpx = m.a / AU * S.moonScale * S.zoom;
         if (rpx < 4 || rpx > 6000) continue;
-        const base = FR.pos[p.id], k = S.moonScale / AU;
-        const pts = P.moonOrbitPoints(m, S.jd, 96).map(q => [base[0] + q[0] * k, base[1] + q[1] * k, base[2] + q[2] * k]);
+        let c = oc.moons[m.id];
+        const mn = Math.min(2048, Math.max(96, pow2(TAU * rpx / 5))), mb = Math.round(S.jd / Math.max(0.01, Math.min(20, 300 / (rpx * 0.9))));
+        if (!c || c.n !== mn || c.b !== mb) {
+          const k = S.moonScale / AU;
+          c = oc.moons[m.id] = { n: mn, b: mb, pts: P.moonOrbitPoints(m, S.jd, mn).map(q => [q[0] * k, q[1] * k, q[2] * k]) };
+        }
         const on = S.sel === m.id;
-        strokePoly(pts, on ? 'rgba(255,179,71,.85)' : (S.focus === p.id ? 'rgba(170,190,235,.5)' : 'rgba(170,190,235,.22)'), on ? 1.5 : 1);
+        strokeOff(c.pts, FR.pos[p.id], on ? 'rgba(255,179,71,.85)' : (S.focus === p.id ? 'rgba(170,190,235,.5)' : 'rgba(170,190,235,.22)'), on ? 1.5 : 1);
       }
     }
   }
 }
-function drawSmall() {
+const SM = { jd: null, cnt: 0 };
+function smallRefresh() {
   const T = (S.jd - J2000) / 36525, jupL = P.elemsAt(PLI.jupiter, T).L * D2R;
+  const groups = [small.belt, small.trojans, small.kuiper, small.stream];
+  let step = 1, ph = 0;
+  if (S.playing) { step = 3; ph = (SM.cnt++) % 3; }       // while playing, refresh 1/3 of the particles each frame
+  else if (SM.jd === S.jd) return;
+  else SM.jd = S.jd;
+  for (const arr of groups) {
+    if (!arr._p) arr._p = new Float64Array(arr.length * 3);
+    const buf = arr._p;
+    for (let i = (S.playing ? ph : 0); i < arr.length; i += step) {
+      const q = P.smallPos(arr[i], S.jd, jupL); buf[i * 3] = q[0]; buf[i * 3 + 1] = q[1]; buf[i * 3 + 2] = q[2];
+    }
+  }
+  if (S.playing) SM.jd = null;
+}
+function drawSmall() {
+  if (!(S.show.belt || S.show.trojan || S.show.kuiper || S.show.halley)) return;
+  smallRefresh();
+  const cx = C[0], cy = C[1], cz = C[2], Z = S.zoom, hw = W / 2, hh = H / 2, sq = S.mode !== 'true';
   const group = (arr, color, size, on) => {
     if (!on) return;
-    ctx.fillStyle = color;
+    const buf = arr._p, h = size / 2;
+    ctx.fillStyle = color; ctx.beginPath();
     for (let i = 0; i < arr.length; i++) {
-      const q = proj(dispVec(P.smallPos(arr[i], S.jd, jupL)));
-      if (q[0] < -4 || q[0] > W + 4 || q[1] < -4 || q[1] > H + 4) continue;
-      ctx.fillRect(q[0] - size / 2, q[1] - size / 2, size, size);
+      let x = buf[i * 3], y = buf[i * 3 + 1], z = buf[i * 3 + 2];
+      if (sq) { const r = Math.sqrt(x * x + y * y + z * z); if (r > 1e-12) { const k = 1 / Math.sqrt(r); x *= k; y *= k; z *= k; } }
+      x -= cx; y -= cy; z -= cz;
+      const sx = hw + (x * cy_ - y * sy_) * Z, sy = hh - ((x * sy_ + y * cy_) * se_ + z * ce_) * Z;
+      if (sx < -4 || sx > W + 4 || sy < -4 || sy > H + 4) continue;
+      ctx.rect(sx - h, sy - h, size, size);
     }
+    ctx.fill();
   };
   group(small.belt, 'rgba(214,196,168,.78)', 1.5, S.show.belt);
   group(small.trojans, 'rgba(120,224,190,.85)', 1.6, S.show.trojan);
@@ -1349,14 +1480,25 @@ function drawSmall() {
 }
 function drawDrops() {
   if (!S.show.drop) return;
-  ctx.setLineDash([2, 3]); ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(89,210,230,.28)';
+  // translucent ecliptic plane disc out to Neptune
+  const Rd = dispR(31), disc = [];
+  for (let k = 0; k <= 96; k++) { const t = TAU * k / 96; disc.push([Rd * Math.cos(t), Rd * Math.sin(t), 0]); }
+  const dq = clipPoly(disc.map(proj));
+  if (dq.length > 2) { ctx.beginPath(); dq.forEach((q, i) => i ? ctx.lineTo(q[0], q[1]) : ctx.moveTo(q[0], q[1])); ctx.closePath(); ctx.fillStyle = 'rgba(89,210,230,.07)'; ctx.fill(); }
+  ctx.beginPath(); pathClipped(disc.map(proj)); ctx.strokeStyle = 'rgba(89,210,230,.5)'; ctx.lineWidth = 1.2; ctx.stroke();
   const ids = PLANETS.map(p => p.id).concat(S.show.dwarfs ? DWARFS.map(d => d.id) : [], S.show.halley ? ['halley'] : []);
+  const up = [], dn = [];
   for (const id of ids) {
     const p = FR.pos[id]; if (Math.abs(p[2]) < 1e-4) continue;
     const a = proj(p), b = proj([p[0], p[1], 0]);
-    ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke();
+    (p[2] > 0 ? up : dn).push([a, b]);
   }
-  ctx.setLineDash([]);
+  for (const [list, line, dot] of [[up, 'rgba(89,230,255,.95)', '#59e6ff'], [dn, 'rgba(255,160,90,.95)', '#ffa05a']]) {
+    ctx.beginPath(); for (const [a, b] of list) pathClipped([a, b]);
+    ctx.strokeStyle = line; ctx.lineWidth = 1.6; ctx.setLineDash([6, 3]); ctx.stroke(); ctx.setLineDash([]);
+    ctx.beginPath(); for (const [, b] of list) { if (b[0] < -10 || b[0] > W + 10 || b[1] < -10 || b[1] > H + 10) continue; ctx.moveTo(b[0] + 3.2, b[1]); ctx.arc(b[0], b[1], 3.2, 0, TAU); }
+    ctx.fillStyle = dot; ctx.fill();
+  }
 }
 
 /* ---------------- 绘制：天体 ---------------- */
@@ -1416,7 +1558,9 @@ function sunDirFor(id) {
 function drawTexSphere(x, y, r, id) {
   const T = TEX[id], R0 = ROT[id];
   if (!T || !R0 || !texCtx && !document) return false;
-  const n = Math.max(48, Math.min(TEXCAP, Math.ceil(2 * r)));
+  const n = Math.max(48, Math.min(S.playing ? 200 : TEXCAP, Math.ceil(2 * r)));
+  const tkey = [id, n, S.jd, S.yaw, S.pitch].join('|'), tnow = performance.now(), tc = TEXC[id];
+  if (tc && (tc.key === tkey || (S.playing && tnow - tc.t < 60))) return blitTex(tc.cv, x, y, r);
   texGrid(n);
   if (!texCtx || !texImg) return false;
   const d = S.jd - 2451545.0, W = (R0.W0 + R0.rate * d) * D2R;
@@ -1454,11 +1598,19 @@ function drawTexSphere(x, y, r, id) {
     out[o + 3] = 255;
   }
   texCtx.putImageData(texImg, 0, 0);
+  const e = TEXC[id] || (TEXC[id] = { cv: document.createElement('canvas') });
+  if (e.cv.width !== n) { e.cv.width = n; e.cv.height = n; }
+  const g2 = e.cv.getContext('2d'); g2.clearRect(0, 0, n, n); g2.drawImage(texCv, 0, 0);
+  e.key = tkey; e.t = tnow;
+  return blitTex(e.cv, x, y, r);
+}
+const TEXC = {};
+function blitTex(cvs, x, y, r) {
   ctx.save();
   ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.clip();
-  ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
+  ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'low';
   ctx.globalAlpha = clamp((r - TEXMIN) / (TEXFULL - TEXMIN), 0, 1);
-  ctx.drawImage(texCv, x - r, y - r, 2 * r, 2 * r);
+  ctx.drawImage(cvs, x - r, y - r, 2 * r, 2 * r);
   ctx.restore();
   return true;
 }
@@ -1544,7 +1696,7 @@ function drawBodies() {
     if (S.sel === it.id) { ctx.beginPath(); ctx.arc(x, y, it.r + 7, 0, TAU); ctx.strokeStyle = '#ffb347'; ctx.lineWidth = 1.5; ctx.stroke(); }
     const showLabel = S.show.labels && (it.kind !== 'moon' || S.sel === it.id || it.orbPx > 30 && S.focus === it.m.par);
     if (showLabel) text(it.name + (ob && ob.status === 'ok' ? ' ◎' : ob && ob.status === 'hard' ? ' ◌' : ''), x + it.r + 6, y + 4, S.sel === it.id ? '#ffb347' : 'rgba(221,230,247,.88)', 11);
-    hits.push({ id: it.id, x, y, r: Math.max(it.r + 4, 9), kind: it.kind });
+    hits.push({ id: it.id, x, y, r: Math.max(it.r + (COARSE ? 12 : 4), COARSE ? 20 : 9), kind: it.kind });
   }
 }
 
@@ -1599,7 +1751,7 @@ function drawScale() {
   ctx.strokeStyle = 'rgba(221,230,247,.8)'; ctx.lineWidth = 1; ctx.stroke();
   const real = units / S.moonScale * AU, inSystem = PLI[S.focus] && PLI[S.focus].moons.length && px > 0;
   let lab;
-  if (inSystem && S.focus !== 'sun' && units * 1 < 0.5) lab = f(real, real < 100 ? 1 : 0) + ' km（卫星轨道已放大 ×' + f(S.moonScale, 0) + '）';
+  if (inSystem && S.focus !== 'sun' && units * 1 < 0.5) lab = f(real, real < 100 ? 1 : 0) + ' km';
   else lab = units >= 0.1 ? f(units, units < 1 ? 1 : 0) + ' AU' : f(units * AU / 1e6, 1) + ' 百万 km';
   monoText(lab, x0 + px + 8, y0 + 1, 'rgba(221,230,247,.85)', 10);
 }
@@ -1617,6 +1769,7 @@ function draw() {
 }
 
 /* ---------------- 交互 ---------------- */
+const COARSE = window.matchMedia && matchMedia('(pointer:coarse)').matches;
 const ptrs = new Map(); let down = null, pinch0 = 0, zoom0 = 1;
 cv.addEventListener('pointerdown', e => {
   cv.setPointerCapture(e.pointerId); ptrs.set(e.pointerId, { x: e.offsetX, y: e.offsetY });
@@ -1627,11 +1780,11 @@ cv.addEventListener('pointermove', e => {
   const p = ptrs.get(e.pointerId); if (!p) return;
   const dx = e.offsetX - p.x, dy = e.offsetY - p.y; p.x = e.offsetX; p.y = e.offsetY;
   if (down) down.moved += Math.abs(dx) + Math.abs(dy);
-  if (ptrs.size === 1) { S.yaw += dx * 0.006; S.pitch = clamp(S.pitch + dy * 0.005, -Math.PI / 2, Math.PI / 2); }
+  if (ptrs.size === 1) { S.yaw -= dx * 0.006; S.pitch = clamp(S.pitch - dy * 0.005, -Math.PI / 2, Math.PI / 2); }
   else if (ptrs.size === 2) { const [a, b] = [...ptrs.values()]; S.zoom = clamp(zoom0 * Math.hypot(a.x - b.x, a.y - b.y) / pinch0, 0.5, 2e7); }
 });
 function endPtr(e) {
-  const wasTap = down && down.moved < 6 && ptrs.size === 1;
+  const wasTap = down && down.moved < (COARSE ? 12 : 6) && ptrs.size === 1;
   ptrs.delete(e.pointerId);
   if (wasTap) {
     let best = null, bd = 1e9;
@@ -1840,7 +1993,6 @@ $('elev').oninput = e => { S.pitch = parseFloat(e.target.value) * D2R; };
 $('azim').oninput = e => { S.yaw = parseFloat(e.target.value) * D2R; };
 document.querySelectorAll('input[name=mode]').forEach(r => r.onchange = () => { S.mode = document.querySelector('input[name=mode]:checked').value; focusOn(S.focus); });
 document.querySelectorAll('[data-show]').forEach(c => c.onchange = () => { S.show[c.dataset.show] = c.checked; });
-$('moonScale').oninput = e => { S.moonScale = Math.pow(10, parseFloat(e.target.value) / 100); $('moonScaleV').textContent = '×' + f(S.moonScale, 0); focusOn(S.focus); };
 document.querySelectorAll('.tabs button').forEach(b => b.onclick = () => {
   document.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('on', x === b));
   document.querySelectorAll('.pane').forEach(p => p.classList.toggle('on', p.id === 'tab-' + b.dataset.tab));
@@ -1942,7 +2094,8 @@ function calcPair() {
   const A = getBody('A'), B = getBody('B'), jd = S.jd;
   S.pair = { A, B };
   const pa = A.helio(jd), pb = B.helio(jd), diff = v3.sub(pb, pa), dAU = v3.len(diff), dKm = dAU * AU;
-  let h = '<div class="card"><h4>① 两点直线距离（' + fmtDate(jd) + '）</h4><dl>';
+  let h = '<details class="card" open><summary style="cursor:pointer;color:var(--teal)">这个页面到底在算什么？</summary><p class="note" style="margin-top:6px">选一个起点天体和一个终点天体。<b>① 距离</b>只是几何：今天两者的直线距离、光传播时间和方向。<b>② 转移</b>在估算一次真实的火箭飞行，用最省燃料的两次点火路线（霍曼转移）：第一次点火离开起点轨道，进入一条刚好与目标轨道相切的椭圆；沿椭圆滑行半圈；到达时第二次点火入轨。它会算出<i>什么时候</i>出发（发射窗口，保证到达时目标恰好在那里）、飞行多久，以及每次点火需要的 Δv（速度改变量）。<b>③</b> 列出飞行步骤，<b>④</b> 对比理想化的持续推力直飞，<b>⑤</b> 用火箭方程把 Δv 换算成推进剂和火箭质量，用的是你填写的火箭数据。这是一阶任务设计估算（圆轨道、共面，不含重力损失和借力飞行），适合比较方案，不能直接用于真实飞行规划。</p></details>';
+  h += '<div class="card"><h4>① 两点直线距离（' + fmtDate(jd) + '）</h4><dl>';
   h += kv('起点 → 终点', A.name + ' → ' + B.name);
   h += kv('直线距离', f(dAU, 5) + ' AU');
   h += kv('', f(dKm, 0) + ' km');
@@ -2067,17 +2220,23 @@ const US_CITIES = [
   ['南部平原', [['俄克拉何马城', '俄克拉何马', 35.468, -97.516, -6], ['达拉斯', '得克萨斯', 32.777, -96.797, -6], ['休斯顿', '得克萨斯', 29.760, -95.370, -6], ['奥斯汀', '得克萨斯', 30.267, -97.743, -6], ['圣安东尼奥', '得克萨斯', 29.424, -98.494, -6]]],
   ['山区', [['丹佛', '科罗拉多', 39.739, -104.990, -7], ['盐湖城', '犹他', 40.761, -111.891, -7], ['博伊西', '爱达荷', 43.615, -116.202, -7], ['阿尔伯克基', '新墨西哥', 35.084, -106.650, -7], ['凤凰城', '亚利桑那（不用夏令时）', 33.448, -112.074, -7, 1]]],
   ['西海岸', [['西雅图', '华盛顿', 47.606, -122.332, -8], ['波特兰', '俄勒冈', 45.505, -122.675, -8], ['旧金山', '加利福尼亚', 37.775, -122.419, -8], ['萨克拉门托', '加利福尼亚', 38.582, -121.494, -8], ['洛杉矶', '加利福尼亚', 34.052, -118.244, -8], ['圣迭戈', '加利福尼亚', 32.716, -117.161, -8], ['拉斯维加斯', '内华达', 36.170, -115.140, -8]]],
-  ['阿拉斯加与夏威夷', [['安克雷奇', '阿拉斯加', 61.218, -149.900, -9], ['火奴鲁鲁', '夏威夷（不用夏令时）', 21.307, -157.858, -10, 1]]]
+  ['阿拉斯加与夏威夷', [['安克雷奇', '阿拉斯加', 61.218, -149.900, -9], ['火奴鲁鲁', '夏威夷（不用夏令时）', 21.307, -157.858, -10, 1]]],
+  ['中国', [['北京', '', 39.904, 116.407, 8, 1], ['上海', '', 31.23, 121.474, 8, 1], ['广州', '广东', 23.129, 113.264, 8, 1], ['深圳', '广东', 22.543, 114.058, 8, 1], ['成都', '四川', 30.573, 104.066, 8, 1], ['重庆', '', 29.563, 106.552, 8, 1], ['武汉', '湖北', 30.593, 114.305, 8, 1], ['西安', '陕西', 34.341, 108.94, 8, 1], ['杭州', '浙江', 30.274, 120.155, 8, 1], ['南京', '江苏', 32.06, 118.797, 8, 1], ['哈尔滨', '黑龙江', 45.803, 126.535, 8, 1], ['沈阳', '辽宁', 41.806, 123.431, 8, 1], ['昆明', '云南', 25.039, 102.718, 8, 1], ['拉萨', '西藏（北京时间）', 29.652, 91.172, 8, 1], ['乌鲁木齐', '新疆（北京时间）', 43.826, 87.617, 8, 1], ['香港', '', 22.32, 114.169, 8, 1]]],
+  ['澳大利亚', [['悉尼', '新南威尔士', -33.869, 151.209, 10, 0, 'AU'], ['墨尔本', '维多利亚', -37.814, 144.963, 10, 0, 'AU'], ['堪培拉', '首都领地', -35.281, 149.129, 10, 0, 'AU'], ['霍巴特', '塔斯马尼亚', -42.882, 147.327, 10, 0, 'AU'], ['布里斯班', '昆士兰（无夏令时）', -27.47, 153.026, 10, 1], ['阿德莱德', '南澳', -34.929, 138.601, 9.5, 0, 'AU'], ['珀斯', '西澳（无夏令时）', -31.951, 115.861, 8, 1], ['达尔文', '北领地（无夏令时）', -12.463, 130.845, 9.5, 1], ['爱丽斯斯普林斯', '北领地（无夏令时）', -23.698, 133.881, 9.5, 1]]]
 ];
 let CITY = US_CITIES.flatMap(g => g[1]).find(c => c[0] === '芝加哥');
 function dstTz(c, jd) {
   const std = c[4]; if (c[5]) return std;
   const dt = P.jdToDate(jd), y = dt.getUTCFullYear();
   const nthSun = (m, n) => { const dow = new Date(Date.UTC(y, m, 1)).getUTCDay(); return 1 + (7 - dow) % 7 + 7 * (n - 1); };
+  if (c[6] === 'AU') {   // southern hemisphere: DST from the first Sunday of October to the first Sunday of April (2:00 standard time)
+    const t0 = dt.getTime(), a = Date.UTC(y, 3, nthSun(3, 1), 2) - std * 3600e3, b = Date.UTC(y, 9, nthSun(9, 1), 2) - std * 3600e3;
+    return t0 < a || t0 >= b ? std + 1 : std;
+  }
   const st = Date.UTC(y, 2, nthSun(2, 2), 2) - std * 3600e3, en = Date.UTC(y, 10, nthSun(10, 1), 1) - std * 3600e3;
   const t = dt.getTime(); return t >= st && t < en ? std + 1 : std;
 }
-function citySummary() { $('citySum').textContent = CITY ? '位置：' + CITY[0] + (CITY[1] ? '，' + CITY[1] : '') + '（点开选择美国城市）' : '位置：自定义经纬度（点开选择美国城市）'; }
+function citySummary() { $('citySum').textContent = CITY ? '位置：' + CITY[0] + (CITY[1] ? '，' + CITY[1] : '') + '（点开选择城市）' : '位置：自定义经纬度（点开选择城市）'; }
 function buildCityList() {
   let h = '';
   for (const [g, list] of US_CITIES) {
@@ -2595,7 +2754,6 @@ function lagInfo() {
   h += rows('L1', false, '不稳定，在 M₁ 与 M₂ 之间') + rows('L2', false, '不稳定，在 M₂ 外侧') + rows('L3', false, '不稳定，在 M₁ 另一侧');
   h += rows('L4', true, '稳定，领先 M₂ 60°') + rows('L5', true, '稳定，落后 M₂ 60°');
   h += '</tbody></table></div>';
-  if (L.kind === 'moon') h += '<p class="note">三维图里的距离按「卫星轨道放大 ×' + f(S.moonScale, 0) + '」显示；表里是真实距离。</p>';
   const note = LAG_NOTES[L.A + '|' + L.B];
   h += '<h4>这个系统里的实例</h4><p class="note" style="margin-top:0">' + (note || 'L1–L3 都是不稳定的鞍点，探测器要用小推力维持“晕轨道”；L4、L5 是稳定的，只要 μ 足够小，小天体可以长期围绕它们摆动（蝌蚪轨道），这些区域会聚集“特洛伊”天体。') + '</p>';
   h += '<h4>公式</h4><ul class="steps">'
@@ -2631,13 +2789,13 @@ $('btnLagSync').onclick = () => {
 $('lagOut').addEventListener('click', e => { const b = e.target.closest('.lagjump'); if (!b) return; $('lagA').value = b.dataset.a; $('lagB').value = b.dataset.b; lagUpdate(); lagInfo(); lagFit('all'); });
 
 /* ---------------- 主循环 ---------------- */
-let last = performance.now();
+let last = performance.now(), skyDrawLast = 0;
 function frame(now) {
   if (window.__gen !== MYGEN) return;
   const dt = Math.min(0.1, (now - last) / 1000); last = now;
   if (S.playing) S.jd += (S.rev ? -1 : 1) * S.rate * dt;
   draw(); updateHud(now); updateInfo(now);
-  if ($('tab-sky').classList.contains('on')) drawSky();
+  if ($('tab-sky').classList.contains('on') && now - skyDrawLast > 90) { skyDrawLast = now; drawSky(); }
   requestAnimationFrame(frame);
 }
 resize();
@@ -2674,7 +2832,6 @@ if (window.__carry) {
     S.yaw = c.yaw; S.pitch = c.pitch; S.zoom = c.zoom; S.focus = c.focus; S.sel = c.sel;
   } catch (e) { console.warn('state carry failed', e); }
 }
-$('moonScale').value = String(Math.round(Math.log10(S.moonScale) * 100)); $('moonScaleV').textContent = '×' + f(S.moonScale, 0);
 buildFrame(); syncChips(); renderInfo(); toggleCustom();
 requestAnimationFrame(frame);
 })();
@@ -3209,8 +3366,8 @@ const nameOf = id => id === 'sun' ? 'Sun' : id === 'halley' ? "Halley's Comet" :
 
 /* ---------------- State ---------------- */
 const S = {
-  jd: P.dateToJd(new Date()), playing: true, rate: 2, rev: false,
-  yaw: 0, pitch: 55 * D2R, zoom: 100, focus: 'sun', sel: 'earth', range: 3.6, mode: 'true', moonScale: 60,
+  jd: P.dateToJd(new Date()), playing: true, rate: 0.0000115741, rev: false,
+  yaw: 0, pitch: 55 * D2R, zoom: 100, focus: 'sun', sel: 'earth', range: 3.6, mode: 'true', moonScale: 1,
   show: { scope: false, dwarfs: true, orbits: true, labels: true, ring: true, axis: true, drop: false, moons: true, moonOrbits: true, belt: true, trojan: true, kuiper: true, halley: true },
   plan: null, pairOn: false, pair: null, lagOn: false, lagAB: null
 };
@@ -3221,7 +3378,7 @@ const stars = []; (function () { let s = 7; const r = () => (s = (s * 16807) % 2
 
 function resize() {
   const r = cv.getBoundingClientRect();
-  DPR = Math.min(2, window.devicePixelRatio || 1);
+  DPR = Math.min(1.5, window.devicePixelRatio || 1);
   W = Math.max(100, r.width); H = Math.max(100, r.height);
   cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
   if (first && r.width > 150) { first = false; focusOn('sun'); }
@@ -3282,9 +3439,45 @@ function buildFrame() {
 function bodyDisp(b) { return FR.pos[b.id] || dispVec(b.helio(S.jd)); }
 
 /* ---------------- Drawing helpers ---------------- */
+/* viewport clipping: keeps coordinates bounded so dashed/huge shapes stay cheap when zoomed in */
+function clipSeg(x0, y0, x1, y1) {
+  const m = 40, xmin = -m, xmax = W + m, ymin = -m, ymax = H + m;
+  let t0 = 0, t1 = 1; const dx = x1 - x0, dy = y1 - y0;
+  const p = [-dx, dx, -dy, dy], q = [x0 - xmin, xmax - x0, y0 - ymin, ymax - y0];
+  for (let i = 0; i < 4; i++) {
+    if (p[i] === 0) { if (q[i] < 0) return null; }
+    else { const r = q[i] / p[i]; if (p[i] < 0) { if (r > t1) return null; if (r > t0) t0 = r; } else { if (r < t0) return null; if (r < t1) t1 = r; } }
+  }
+  return [x0 + t0 * dx, y0 + t0 * dy, x0 + t1 * dx, y0 + t1 * dy];
+}
+function pathClipped(qs) {
+  let px = NaN, py = NaN;
+  for (let i = 1; i < qs.length; i++) {
+    const c = clipSeg(qs[i - 1][0], qs[i - 1][1], qs[i][0], qs[i][1]);
+    if (!c) continue;
+    if (c[0] !== px || c[1] !== py) ctx.moveTo(c[0], c[1]);
+    ctx.lineTo(c[2], c[3]); px = c[2]; py = c[3];
+  }
+}
+function clipPoly(qs) {   // Sutherland-Hodgman against the viewport
+  const m = 40;
+  const edges = [[0, -m, 1], [0, W + m, -1], [1, -m, 1], [1, H + m, -1]];
+  let out = qs;
+  for (const [ax, v, sg] of edges) {
+    const inp = out; out = [];
+    for (let i = 0; i < inp.length; i++) {
+      const a = inp[i], b = inp[(i + 1) % inp.length];
+      const ia = (a[ax] - v) * sg >= 0, ib = (b[ax] - v) * sg >= 0;
+      if (ia) out.push(a);
+      if (ia !== ib) { const t = (v - a[ax]) / (b[ax] - a[ax]); out.push([a[0] + t * (b[0] - a[0]), a[1] + t * (b[1] - a[1])]); }
+    }
+    if (!out.length) break;
+  }
+  return out;
+}
 function strokePoly(pts, color, width, dash) {
   ctx.beginPath();
-  for (let i = 0; i < pts.length; i++) { const q = proj(pts[i]); if (i) ctx.lineTo(q[0], q[1]); else ctx.moveTo(q[0], q[1]); }
+  pathClipped(pts.map(proj));
   ctx.strokeStyle = color; ctx.lineWidth = width; ctx.setLineDash(dash || []); ctx.stroke(); ctx.setLineDash([]);
 }
 function text(s, x, y, color, size, align) {
@@ -3327,47 +3520,113 @@ function drawProtractor() {
 }
 
 /* ---------------- Drawing: orbits ---------------- */
+/* ---------------- Orbit / particle caches (performance) ---------------- */
+const OC = { key: '', planets: {}, dwarfs: {}, halley: null, moons: {} };
+function orbitCache() {
+  if (OC.mode !== S.mode) { OC.mode = S.mode; OC.planets = {}; OC.dwarfs = {}; OC.halley = null; OC.moons = {}; }
+  return OC;
+}
+// sample count grows with on-screen size so the polyline stays a smooth curve at any zoom; time bucket shrinks so elements never visibly drift
+const pow2 = x => Math.pow(2, Math.ceil(Math.log2(Math.max(x, 1))));
+const orbN = (aDisp, lo) => Math.min(4096, Math.max(lo, pow2(TAU * aDisp * S.zoom / 5)));
+const orbStep = days => Math.max(1, Math.min(730, 1e6 / S.zoom)) * (days || 1);
+function flatten(pts) { return pts.map(q => [q[0], q[1], 0]); }
+function strokeOff(pts, off, color, width, dash) {
+  ctx.beginPath();
+  pathClipped(pts.map(v => proj([v[0] + off[0], v[1] + off[1], v[2] + off[2]])));
+  ctx.strokeStyle = color; ctx.lineWidth = width; ctx.setLineDash(dash || []); ctx.stroke(); ctx.setLineDash([]);
+}
 function drawOrbits() {
-  const T = (S.jd - J2000) / 36525;
+  const T = (S.jd - J2000) / 36525, oc = orbitCache();
+  const planetOrb = p => {
+    const k = P.elemsAt(p, T), n = orbN(dispR(k.a), 200), b = Math.round(S.jd / orbStep());
+    let c = oc.planets[p.id];
+    if (!c || c.n !== n || c.b !== b) {
+      const raw = P.orbitPoints(k.a, k.e, k.i, k.Om, k.w, n);
+      c = oc.planets[p.id] = { n, b, pts: raw.map(dispVec), flat: S.show.drop ? flatten(raw).map(dispVec) : null };
+    }
+    if (S.show.drop && !c.flat) c.flat = flatten(P.orbitPoints(k.a, k.e, k.i, k.Om, k.w, n)).map(dispVec);
+    return c;
+  };
+  const dwarfOrb = d => {
+    const n = orbN(dispR(d.a), 240);
+    let c = oc.dwarfs[d.id];
+    if (!c || c.n !== n) {
+      const raw = P.orbitPoints(d.a, d.e, d.i * D2R, d.Om * D2R, d.w * D2R, n);
+      c = oc.dwarfs[d.id] = { n, pts: raw.map(dispVec), flat: flatten(raw).map(dispVec) };
+    }
+    return c;
+  };
   if (S.show.orbits) {
     for (const p of PLANETS) {
-      const k = P.elemsAt(p, T);
-      const pts = P.orbitPoints(k.a, k.e, k.i, k.Om, k.w, 200).map(dispVec);
       const on = S.sel === p.id;
-      strokePoly(pts, on ? 'rgba(255,179,71,.9)' : p.col + '66', on ? 1.6 : 1);
+      strokePoly(planetOrb(p).pts, on ? 'rgba(255,179,71,.9)' : p.col + '66', on ? 1.6 : 1);
     }
     if (S.show.dwarfs) for (const d of DWARFS) {
       const on = S.sel === d.id;
-      strokePoly(P.orbitPoints(d.a, d.e, d.i * D2R, d.Om * D2R, d.w * D2R, 240).map(dispVec), on ? 'rgba(255,179,71,.9)' : d.col + '66', on ? 1.6 : 1, [2, 4]);
+      strokePoly(dwarfOrb(d).pts, on ? 'rgba(255,179,71,.9)' : d.col + '66', on ? 1.6 : 1, [2, 4]);
     }
     if (S.show.halley) {
-      const H0 = P.HALLEY;
-      strokePoly(P.orbitPoints(H0.a, H0.e, H0.i, H0.Om, H0.w, 260).map(dispVec), S.sel === 'halley' ? 'rgba(255,179,71,.9)' : 'rgba(255,214,140,.38)', 1, [5, 4]);
+      const hn = orbN(dispR(P.HALLEY.a), 260);
+      if (!oc.halley || oc.halley.n !== hn) { const H0 = P.HALLEY; oc.halley = { n: hn, pts: P.orbitPoints(H0.a, H0.e, H0.i, H0.Om, H0.w, hn).map(dispVec) }; }
+      strokePoly(oc.halley.pts, S.sel === 'halley' ? 'rgba(255,179,71,.9)' : 'rgba(255,214,140,.38)', 1, [5, 4]);
     }
+  }
+  if (S.show.drop) {   // orbit shadows on the ecliptic plane
+    for (const p of PLANETS) strokePoly(planetOrb(p).flat, 'rgba(89,210,230,.38)', 1, [6, 4]);
+    if (S.show.dwarfs) for (const d of DWARFS) strokePoly(dwarfOrb(d).flat, 'rgba(89,210,230,.22)', 1, [3, 5]);
   }
   if (S.show.moons && S.show.moonOrbits) {
     for (const p of PLANETS) {
       for (const m of p.moons) {
         const rpx = m.a / AU * S.moonScale * S.zoom;
         if (rpx < 4 || rpx > 6000) continue;
-        const base = FR.pos[p.id], k = S.moonScale / AU;
-        const pts = P.moonOrbitPoints(m, S.jd, 96).map(q => [base[0] + q[0] * k, base[1] + q[1] * k, base[2] + q[2] * k]);
+        let c = oc.moons[m.id];
+        const mn = Math.min(2048, Math.max(96, pow2(TAU * rpx / 5))), mb = Math.round(S.jd / Math.max(0.01, Math.min(20, 300 / (rpx * 0.9))));
+        if (!c || c.n !== mn || c.b !== mb) {
+          const k = S.moonScale / AU;
+          c = oc.moons[m.id] = { n: mn, b: mb, pts: P.moonOrbitPoints(m, S.jd, mn).map(q => [q[0] * k, q[1] * k, q[2] * k]) };
+        }
         const on = S.sel === m.id;
-        strokePoly(pts, on ? 'rgba(255,179,71,.85)' : (S.focus === p.id ? 'rgba(170,190,235,.5)' : 'rgba(170,190,235,.22)'), on ? 1.5 : 1);
+        strokeOff(c.pts, FR.pos[p.id], on ? 'rgba(255,179,71,.85)' : (S.focus === p.id ? 'rgba(170,190,235,.5)' : 'rgba(170,190,235,.22)'), on ? 1.5 : 1);
       }
     }
   }
 }
-function drawSmall() {
+const SM = { jd: null, cnt: 0 };
+function smallRefresh() {
   const T = (S.jd - J2000) / 36525, jupL = P.elemsAt(PLI.jupiter, T).L * D2R;
+  const groups = [small.belt, small.trojans, small.kuiper, small.stream];
+  let step = 1, ph = 0;
+  if (S.playing) { step = 3; ph = (SM.cnt++) % 3; }       // while playing, refresh 1/3 of the particles each frame
+  else if (SM.jd === S.jd) return;
+  else SM.jd = S.jd;
+  for (const arr of groups) {
+    if (!arr._p) arr._p = new Float64Array(arr.length * 3);
+    const buf = arr._p;
+    for (let i = (S.playing ? ph : 0); i < arr.length; i += step) {
+      const q = P.smallPos(arr[i], S.jd, jupL); buf[i * 3] = q[0]; buf[i * 3 + 1] = q[1]; buf[i * 3 + 2] = q[2];
+    }
+  }
+  if (S.playing) SM.jd = null;
+}
+function drawSmall() {
+  if (!(S.show.belt || S.show.trojan || S.show.kuiper || S.show.halley)) return;
+  smallRefresh();
+  const cx = C[0], cy = C[1], cz = C[2], Z = S.zoom, hw = W / 2, hh = H / 2, sq = S.mode !== 'true';
   const group = (arr, color, size, on) => {
     if (!on) return;
-    ctx.fillStyle = color;
+    const buf = arr._p, h = size / 2;
+    ctx.fillStyle = color; ctx.beginPath();
     for (let i = 0; i < arr.length; i++) {
-      const q = proj(dispVec(P.smallPos(arr[i], S.jd, jupL)));
-      if (q[0] < -4 || q[0] > W + 4 || q[1] < -4 || q[1] > H + 4) continue;
-      ctx.fillRect(q[0] - size / 2, q[1] - size / 2, size, size);
+      let x = buf[i * 3], y = buf[i * 3 + 1], z = buf[i * 3 + 2];
+      if (sq) { const r = Math.sqrt(x * x + y * y + z * z); if (r > 1e-12) { const k = 1 / Math.sqrt(r); x *= k; y *= k; z *= k; } }
+      x -= cx; y -= cy; z -= cz;
+      const sx = hw + (x * cy_ - y * sy_) * Z, sy = hh - ((x * sy_ + y * cy_) * se_ + z * ce_) * Z;
+      if (sx < -4 || sx > W + 4 || sy < -4 || sy > H + 4) continue;
+      ctx.rect(sx - h, sy - h, size, size);
     }
+    ctx.fill();
   };
   group(small.belt, 'rgba(214,196,168,.78)', 1.5, S.show.belt);
   group(small.trojans, 'rgba(120,224,190,.85)', 1.6, S.show.trojan);
@@ -3376,14 +3635,25 @@ function drawSmall() {
 }
 function drawDrops() {
   if (!S.show.drop) return;
-  ctx.setLineDash([2, 3]); ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(89,210,230,.28)';
+  // translucent ecliptic plane disc out to Neptune
+  const Rd = dispR(31), disc = [];
+  for (let k = 0; k <= 96; k++) { const t = TAU * k / 96; disc.push([Rd * Math.cos(t), Rd * Math.sin(t), 0]); }
+  const dq = clipPoly(disc.map(proj));
+  if (dq.length > 2) { ctx.beginPath(); dq.forEach((q, i) => i ? ctx.lineTo(q[0], q[1]) : ctx.moveTo(q[0], q[1])); ctx.closePath(); ctx.fillStyle = 'rgba(89,210,230,.07)'; ctx.fill(); }
+  ctx.beginPath(); pathClipped(disc.map(proj)); ctx.strokeStyle = 'rgba(89,210,230,.5)'; ctx.lineWidth = 1.2; ctx.stroke();
   const ids = PLANETS.map(p => p.id).concat(S.show.dwarfs ? DWARFS.map(d => d.id) : [], S.show.halley ? ['halley'] : []);
+  const up = [], dn = [];
   for (const id of ids) {
     const p = FR.pos[id]; if (Math.abs(p[2]) < 1e-4) continue;
     const a = proj(p), b = proj([p[0], p[1], 0]);
-    ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke();
+    (p[2] > 0 ? up : dn).push([a, b]);
   }
-  ctx.setLineDash([]);
+  for (const [list, line, dot] of [[up, 'rgba(89,230,255,.95)', '#59e6ff'], [dn, 'rgba(255,160,90,.95)', '#ffa05a']]) {
+    ctx.beginPath(); for (const [a, b] of list) pathClipped([a, b]);
+    ctx.strokeStyle = line; ctx.lineWidth = 1.6; ctx.setLineDash([6, 3]); ctx.stroke(); ctx.setLineDash([]);
+    ctx.beginPath(); for (const [, b] of list) { if (b[0] < -10 || b[0] > W + 10 || b[1] < -10 || b[1] > H + 10) continue; ctx.moveTo(b[0] + 3.2, b[1]); ctx.arc(b[0], b[1], 3.2, 0, TAU); }
+    ctx.fillStyle = dot; ctx.fill();
+  }
 }
 
 /* ---------------- Drawing: bodies ---------------- */
@@ -3443,7 +3713,9 @@ function sunDirFor(id) {
 function drawTexSphere(x, y, r, id) {
   const T = TEX[id], R0 = ROT[id];
   if (!T || !R0 || !texCtx && !document) return false;
-  const n = Math.max(48, Math.min(TEXCAP, Math.ceil(2 * r)));
+  const n = Math.max(48, Math.min(S.playing ? 200 : TEXCAP, Math.ceil(2 * r)));
+  const tkey = [id, n, S.jd, S.yaw, S.pitch].join('|'), tnow = performance.now(), tc = TEXC[id];
+  if (tc && (tc.key === tkey || (S.playing && tnow - tc.t < 60))) return blitTex(tc.cv, x, y, r);
   texGrid(n);
   if (!texCtx || !texImg) return false;
   const d = S.jd - 2451545.0, W = (R0.W0 + R0.rate * d) * D2R;
@@ -3481,11 +3753,19 @@ function drawTexSphere(x, y, r, id) {
     out[o + 3] = 255;
   }
   texCtx.putImageData(texImg, 0, 0);
+  const e = TEXC[id] || (TEXC[id] = { cv: document.createElement('canvas') });
+  if (e.cv.width !== n) { e.cv.width = n; e.cv.height = n; }
+  const g2 = e.cv.getContext('2d'); g2.clearRect(0, 0, n, n); g2.drawImage(texCv, 0, 0);
+  e.key = tkey; e.t = tnow;
+  return blitTex(e.cv, x, y, r);
+}
+const TEXC = {};
+function blitTex(cvs, x, y, r) {
   ctx.save();
   ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.clip();
-  ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
+  ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'low';
   ctx.globalAlpha = clamp((r - TEXMIN) / (TEXFULL - TEXMIN), 0, 1);
-  ctx.drawImage(texCv, x - r, y - r, 2 * r, 2 * r);
+  ctx.drawImage(cvs, x - r, y - r, 2 * r, 2 * r);
   ctx.restore();
   return true;
 }
@@ -3571,7 +3851,7 @@ function drawBodies() {
     if (S.sel === it.id) { ctx.beginPath(); ctx.arc(x, y, it.r + 7, 0, TAU); ctx.strokeStyle = '#ffb347'; ctx.lineWidth = 1.5; ctx.stroke(); }
     const showLabel = S.show.labels && (it.kind !== 'moon' || S.sel === it.id || it.orbPx > 30 && S.focus === it.m.par);
     if (showLabel) text(it.name + (ob && ob.status === 'ok' ? ' ◎' : ob && ob.status === 'hard' ? ' ◌' : ''), x + it.r + 6, y + 4, S.sel === it.id ? '#ffb347' : 'rgba(221,230,247,.88)', 11);
-    hits.push({ id: it.id, x, y, r: Math.max(it.r + 4, 9), kind: it.kind });
+    hits.push({ id: it.id, x, y, r: Math.max(it.r + (COARSE ? 12 : 4), COARSE ? 20 : 9), kind: it.kind });
   }
 }
 
@@ -3626,7 +3906,7 @@ function drawScale() {
   ctx.strokeStyle = 'rgba(221,230,247,.8)'; ctx.lineWidth = 1; ctx.stroke();
   const real = units / S.moonScale * AU, inSystem = PLI[S.focus] && PLI[S.focus].moons.length && px > 0;
   let lab;
-  if (inSystem && S.focus !== 'sun' && units * 1 < 0.5) lab = f(real, real < 100 ? 1 : 0) + ' km (moon orbits magnified ×' + f(S.moonScale, 0) + ')';
+  if (inSystem && S.focus !== 'sun' && units * 1 < 0.5) lab = f(real, real < 100 ? 1 : 0) + ' km';
   else lab = units >= 0.1 ? f(units, units < 1 ? 1 : 0) + ' AU' : f(units * AU / 1e6, 1) + ' million km';
   monoText(lab, x0 + px + 8, y0 + 1, 'rgba(221,230,247,.85)', 10);
 }
@@ -3644,6 +3924,7 @@ function draw() {
 }
 
 /* ---------------- Interaction ---------------- */
+const COARSE = window.matchMedia && matchMedia('(pointer:coarse)').matches;
 const ptrs = new Map(); let down = null, pinch0 = 0, zoom0 = 1;
 cv.addEventListener('pointerdown', e => {
   cv.setPointerCapture(e.pointerId); ptrs.set(e.pointerId, { x: e.offsetX, y: e.offsetY });
@@ -3654,11 +3935,11 @@ cv.addEventListener('pointermove', e => {
   const p = ptrs.get(e.pointerId); if (!p) return;
   const dx = e.offsetX - p.x, dy = e.offsetY - p.y; p.x = e.offsetX; p.y = e.offsetY;
   if (down) down.moved += Math.abs(dx) + Math.abs(dy);
-  if (ptrs.size === 1) { S.yaw += dx * 0.006; S.pitch = clamp(S.pitch + dy * 0.005, -Math.PI / 2, Math.PI / 2); }
+  if (ptrs.size === 1) { S.yaw -= dx * 0.006; S.pitch = clamp(S.pitch - dy * 0.005, -Math.PI / 2, Math.PI / 2); }
   else if (ptrs.size === 2) { const [a, b] = [...ptrs.values()]; S.zoom = clamp(zoom0 * Math.hypot(a.x - b.x, a.y - b.y) / pinch0, 0.5, 2e7); }
 });
 function endPtr(e) {
-  const wasTap = down && down.moved < 6 && ptrs.size === 1;
+  const wasTap = down && down.moved < (COARSE ? 12 : 6) && ptrs.size === 1;
   ptrs.delete(e.pointerId);
   if (wasTap) {
     let best = null, bd = 1e9;
@@ -3867,7 +4148,6 @@ $('elev').oninput = e => { S.pitch = parseFloat(e.target.value) * D2R; };
 $('azim').oninput = e => { S.yaw = parseFloat(e.target.value) * D2R; };
 document.querySelectorAll('input[name=mode]').forEach(r => r.onchange = () => { S.mode = document.querySelector('input[name=mode]:checked').value; focusOn(S.focus); });
 document.querySelectorAll('[data-show]').forEach(c => c.onchange = () => { S.show[c.dataset.show] = c.checked; });
-$('moonScale').oninput = e => { S.moonScale = Math.pow(10, parseFloat(e.target.value) / 100); $('moonScaleV').textContent = '×' + f(S.moonScale, 0); focusOn(S.focus); };
 document.querySelectorAll('.tabs button').forEach(b => b.onclick = () => {
   document.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('on', x === b));
   document.querySelectorAll('.pane').forEach(p => p.classList.toggle('on', p.id === 'tab-' + b.dataset.tab));
@@ -3969,7 +4249,8 @@ function calcPair() {
   const A = getBody('A'), B = getBody('B'), jd = S.jd;
   S.pair = { A, B };
   const pa = A.helio(jd), pb = B.helio(jd), diff = v3.sub(pb, pa), dAU = v3.len(diff), dKm = dAU * AU;
-  let h = '<div class="card"><h4>① Straight-line distance (' + fmtDate(jd) + ')</h4><dl>';
+  let h = '<details class="card" open><summary style="cursor:pointer;color:var(--teal)">What does this tab calculate?</summary><p class="note" style="margin-top:6px">Pick a start body and an end body. <b>① Distance</b> is plain geometry: the straight-line distance today, the light travel time and the direction. <b>② Transfer</b> estimates a real rocket trip using the cheapest two-burn route (a Hohmann transfer): burn once to leave the start orbit onto an ellipse that just touches the target\'s orbit, coast along half of that ellipse, then burn again to arrive. It tells you <i>when</i> to leave (the launch window, so the target is in the right place when you arrive), how long the flight takes, and the Δv (speed change) each burn needs. <b>③</b> lists the steps, <b>④</b> compares an idealized continuous-thrust flight, and <b>⑤</b> converts Δv into propellant and rocket mass with the rocket equation, using the rocket data you enter. It is a first-order mission-design estimate (circular, coplanar orbits; no gravity losses or flybys), good for comparing options, not for flight planning.</p></details>';
+  h += '<div class="card"><h4>① Straight-line distance (' + fmtDate(jd) + ')</h4><dl>';
   h += kv('Start → End', A.name + ' → ' + B.name);
   h += kv('Straight-line distance', f(dAU, 5) + ' AU');
   h += kv('', f(dKm, 0) + ' km');
@@ -4094,17 +4375,23 @@ const US_CITIES = [
   ['South Central', [['Oklahoma City', 'Oklahoma', 35.468, -97.516, -6], ['Dallas', 'Texas', 32.777, -96.797, -6], ['Houston', 'Texas', 29.760, -95.370, -6], ['Austin', 'Texas', 30.267, -97.743, -6], ['San Antonio', 'Texas', 29.424, -98.494, -6]]],
   ['Mountain', [['Denver', 'Colorado', 39.739, -104.990, -7], ['Salt Lake City', 'Utah', 40.761, -111.891, -7], ['Boise', 'Idaho', 43.615, -116.202, -7], ['Albuquerque', 'New Mexico', 35.084, -106.650, -7], ['Phoenix', 'Arizona (no DST)', 33.448, -112.074, -7, 1]]],
   ['West Coast', [['Seattle', 'Washington', 47.606, -122.332, -8], ['Portland', 'Oregon', 45.505, -122.675, -8], ['San Francisco', 'California', 37.775, -122.419, -8], ['Sacramento', 'California', 38.582, -121.494, -8], ['Los Angeles', 'California', 34.052, -118.244, -8], ['San Diego', 'California', 32.716, -117.161, -8], ['Las Vegas', 'Nevada', 36.170, -115.140, -8]]],
-  ['Alaska & Hawaii', [['Anchorage', 'Alaska', 61.218, -149.900, -9], ['Honolulu', 'Hawaii (no DST)', 21.307, -157.858, -10, 1]]]
+  ['Alaska & Hawaii', [['Anchorage', 'Alaska', 61.218, -149.900, -9], ['Honolulu', 'Hawaii (no DST)', 21.307, -157.858, -10, 1]]],
+  ['China', [['Beijing', '', 39.904, 116.407, 8, 1], ['Shanghai', '', 31.23, 121.474, 8, 1], ['Guangzhou', 'Guangdong', 23.129, 113.264, 8, 1], ['Shenzhen', 'Guangdong', 22.543, 114.058, 8, 1], ['Chengdu', 'Sichuan', 30.573, 104.066, 8, 1], ['Chongqing', '', 29.563, 106.552, 8, 1], ['Wuhan', 'Hubei', 30.593, 114.305, 8, 1], ['Xi\'an', 'Shaanxi', 34.341, 108.94, 8, 1], ['Hangzhou', 'Zhejiang', 30.274, 120.155, 8, 1], ['Nanjing', 'Jiangsu', 32.06, 118.797, 8, 1], ['Harbin', 'Heilongjiang', 45.803, 126.535, 8, 1], ['Shenyang', 'Liaoning', 41.806, 123.431, 8, 1], ['Kunming', 'Yunnan', 25.039, 102.718, 8, 1], ['Lhasa', 'Tibet (Beijing time)', 29.652, 91.172, 8, 1], ['Urumqi', 'Xinjiang (Beijing time)', 43.826, 87.617, 8, 1], ['Hong Kong', '', 22.32, 114.169, 8, 1]]],
+  ['Australia', [['Sydney', 'New South Wales', -33.869, 151.209, 10, 0, 'AU'], ['Melbourne', 'Victoria', -37.814, 144.963, 10, 0, 'AU'], ['Canberra', 'ACT', -35.281, 149.129, 10, 0, 'AU'], ['Hobart', 'Tasmania', -42.882, 147.327, 10, 0, 'AU'], ['Brisbane', 'Queensland (no DST)', -27.47, 153.026, 10, 1], ['Adelaide', 'South Australia', -34.929, 138.601, 9.5, 0, 'AU'], ['Perth', 'Western Australia (no DST)', -31.951, 115.861, 8, 1], ['Darwin', 'Northern Territory (no DST)', -12.463, 130.845, 9.5, 1], ['Alice Springs', 'Northern Territory (no DST)', -23.698, 133.881, 9.5, 1]]]
 ];
 let CITY = US_CITIES.flatMap(g => g[1]).find(c => c[0] === 'Chicago');
 function dstTz(c, jd) {
   const std = c[4]; if (c[5]) return std;
   const dt = P.jdToDate(jd), y = dt.getUTCFullYear();
   const nthSun = (m, n) => { const dow = new Date(Date.UTC(y, m, 1)).getUTCDay(); return 1 + (7 - dow) % 7 + 7 * (n - 1); };
+  if (c[6] === 'AU') {   // southern hemisphere: DST from the first Sunday of October to the first Sunday of April (2:00 standard time)
+    const t0 = dt.getTime(), a = Date.UTC(y, 3, nthSun(3, 1), 2) - std * 3600e3, b = Date.UTC(y, 9, nthSun(9, 1), 2) - std * 3600e3;
+    return t0 < a || t0 >= b ? std + 1 : std;
+  }
   const st = Date.UTC(y, 2, nthSun(2, 2), 2) - std * 3600e3, en = Date.UTC(y, 10, nthSun(10, 1), 1) - std * 3600e3;
   const t = dt.getTime(); return t >= st && t < en ? std + 1 : std;
 }
-function citySummary() { $('citySum').textContent = CITY ? 'Location: ' + CITY[0] + (CITY[1] ? ', ' + CITY[1] : '') + ' (open to choose a US city)' : 'Location: custom lat/lon (open to choose a US city)'; }
+function citySummary() { $('citySum').textContent = CITY ? 'Location: ' + CITY[0] + (CITY[1] ? ', ' + CITY[1] : '') + ' (open to choose a city)' : 'Location: custom lat/lon (open to choose a city)'; }
 function buildCityList() {
   let h = '';
   for (const [g, list] of US_CITIES) {
@@ -4622,7 +4909,6 @@ function lagInfo() {
   h += rows('L1', false, 'Unstable, between M₁ and M₂') + rows('L2', false, 'Unstable, beyond M₂') + rows('L3', false, 'Unstable, on the far side of M₁');
   h += rows('L4', true, 'Stable, 60° ahead of M₂') + rows('L5', true, 'Stable, 60° behind M₂');
   h += '</tbody></table></div>';
-  if (L.kind === 'moon') h += '<p class="note">Distances in the 3D view are drawn with satellite orbits magnified ×' + f(S.moonScale, 0) + '; the table shows true distances.</p>';
   const note = LAG_NOTES[L.A + '|' + L.B];
   h += '<h4>Examples in this system</h4><p class="note" style="margin-top:0">' + (note || 'L1-L3 are unstable saddle points, so spacecraft need small thrusts to maintain a "halo orbit"; L4 and L5 are stable, and as long as μ is small enough, small bodies can librate around them for a long time (tadpole orbits), so these regions collect "Trojan" bodies.') + '</p>';
   h += '<h4>Formulas</h4><ul class="steps">'
@@ -4658,13 +4944,13 @@ $('btnLagSync').onclick = () => {
 $('lagOut').addEventListener('click', e => { const b = e.target.closest('.lagjump'); if (!b) return; $('lagA').value = b.dataset.a; $('lagB').value = b.dataset.b; lagUpdate(); lagInfo(); lagFit('all'); });
 
 /* ---------------- Main loop ---------------- */
-let last = performance.now();
+let last = performance.now(), skyDrawLast = 0;
 function frame(now) {
   if (window.__gen !== MYGEN) return;
   const dt = Math.min(0.1, (now - last) / 1000); last = now;
   if (S.playing) S.jd += (S.rev ? -1 : 1) * S.rate * dt;
   draw(); updateHud(now); updateInfo(now);
-  if ($('tab-sky').classList.contains('on')) drawSky();
+  if ($('tab-sky').classList.contains('on') && now - skyDrawLast > 90) { skyDrawLast = now; drawSky(); }
   requestAnimationFrame(frame);
 }
 resize();
@@ -4701,7 +4987,6 @@ if (window.__carry) {
     S.yaw = c.yaw; S.pitch = c.pitch; S.zoom = c.zoom; S.focus = c.focus; S.sel = c.sel;
   } catch (e) { console.warn('state carry failed', e); }
 }
-$('moonScale').value = String(Math.round(Math.log10(S.moonScale) * 100)); $('moonScaleV').textContent = '×' + f(S.moonScale, 0);
 buildFrame(); syncChips(); renderInfo(); toggleCustom();
 requestAnimationFrame(frame);
 })();
@@ -4730,3 +5015,6 @@ document.addEventListener('click',function(e){
 boot(lang,null);
 })();
 </script>
+
+</body>
+</html>
