@@ -2,8 +2,6 @@
 
 An interactive, rotatable 3D model of the solar system that runs entirely in your browser. It is a single HTML file with no server, no accounts and no tracking.
 
-**Live demo:** _add your GitHub Pages link here_
-
 > This project was written entirely by [Claude Code](https://claude.com/claude-code), Anthropic's AI coding assistant, through a conversation with its author.
 
 ## Features
