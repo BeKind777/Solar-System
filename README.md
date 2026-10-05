@@ -35,5 +35,4 @@ The page does not send any data anywhere. Your selected city is only used inside
 ## Credits
 
 - Planet positions: JPL approximate Keplerian elements; Moon model after Paul Schlyter.
-- Textures: planet and Moon maps from [Planet Pixel Emporium](http://planetpixelemporium.com/planets.html), obtained through [threex.planets](https://github.com/jeromeetienne/threex.planets) and downscaled. threex.planets is MIT licensed, but that covers its code; the textures remain under Planet Pixel Emporium's own terms.
 - Built with Claude Code.
