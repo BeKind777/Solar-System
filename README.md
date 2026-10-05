@@ -22,7 +22,7 @@ An interactive, rotatable 3D model of the solar system that runs entirely in you
 
 ## Run it
 
-Open `solar-system.html` in any modern browser, or enable GitHub Pages for this repository and open the published link. Nothing needs to be installed.
+Open in any modern browser, or enable GitHub Pages for this repository and open the published link. Nothing needs to be installed.
 
 ## Accuracy
 
