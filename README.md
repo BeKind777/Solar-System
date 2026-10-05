@@ -2,6 +2,8 @@
 
 An interactive, rotatable 3D model of the solar system that runs entirely in your browser. It is a single HTML file with no server, no accounts and no tracking.
 
+**Live demo:** bekind777.github.io/Solar-System/
+
 > This project was written entirely by [Claude Code](https://claude.com/claude-code), Anthropic's AI coding assistant, through a conversation with its author.
 
 ## Features
@@ -20,7 +22,7 @@ An interactive, rotatable 3D model of the solar system that runs entirely in you
 
 ## Run it
 
-Open the link in any modern browser, or enable GitHub Pages for this repository and open the published link. Nothing needs to be installed.
+Open `solar-system.html` in any modern browser, or enable GitHub Pages for this repository and open the published link. Nothing needs to be installed.
 
 ## Accuracy
 
@@ -33,5 +35,5 @@ The page does not send any data anywhere. Your selected city is only used inside
 ## Credits
 
 - Planet positions: JPL approximate Keplerian elements; Moon model after Paul Schlyter.
-- Textures: [threex.planets](https://github.com/jeromeetienne/threex.planets) (MIT license), based on Solar System Scope and NASA public imagery.
+- Textures: planet and Moon maps from [Planet Pixel Emporium](http://planetpixelemporium.com/planets.html), obtained through [threex.planets](https://github.com/jeromeetienne/threex.planets) and downscaled. threex.planets is MIT licensed, but that covers its code; the textures remain under Planet Pixel Emporium's own terms.
 - Built with Claude Code.
